@@ -323,8 +323,8 @@ export default function Home() {
   const shareText = () => {
     const profile = profiles[result.best.code];
     const dimensions = result.axes.map((axis) => `${axis.winner} ${Math.max(axis.leftPercent, axis.rightPercent)}%`).join(" · ");
-    const functions = result.functionRanking.slice(0, 4).map((fn) => fn.key).join(" → ");
-    return `我的「職場型格」結果是 ${result.best.code}｜${profile.title}\n第二可能：${result.second.code}\n本次辨型清晰度：${result.clarity.label}\n四維傾向：${dimensions}\n認知功能傾向：${functions}\n完成題數：${activeQuestionIds.length} 題\n\n這是非官方、非診斷性的自我探索結果。`;
+    const theoreticalStack = profile.stack.join(" → ");
+    return `我的「職場型格」結果是 ${result.best.code}｜${profile.title}\n第二可能：${result.second.code}\n本次辨型清晰度：${result.clarity.label}\n四維傾向：${dimensions}\n類型理論序列（${result.best.code}）：${theoreticalStack}\n完成題數：${activeQuestionIds.length} 題\n\n這是非官方、非診斷性的自我探索結果。`;
   };
 
   const copyResult = async () => {
