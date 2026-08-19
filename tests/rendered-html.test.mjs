@@ -24,7 +24,11 @@ test("renders the finished workplace assessment", async () => {
   assert.match(html, /<title>職場型格｜自適應深度辨型<\/title>/i);
   assert.match(html, /了解你點樣思考/);
   assert.match(html, /並非官方 MBTI/);
-  assert.match(html, /http:\/\/localhost\/og\.png/);
+  assert.match(html, /http:\/\/localhost\/og-preview\.jpg/);
+  assert.match(html, /property="og:site_name" content="職場型格"/);
+  assert.match(html, /property="og:image:width" content="1200"/);
+  assert.match(html, /property="og:image:height" content="630"/);
+  assert.match(html, /property="og:image:type" content="image\/jpeg"/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 

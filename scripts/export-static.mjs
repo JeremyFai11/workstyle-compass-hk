@@ -47,6 +47,7 @@ if (!response.ok) {
 let html = await response.text();
 html = html
   .replaceAll("/_next/", publicAsset("/_next/"))
+  .replaceAll("/og-preview.jpg", publicAsset("/og-preview.jpg"))
   .replaceAll("/og.png", publicAsset("/og.png"))
   .replace(
     'nav:{"pathname":"/","searchParams":[]}',
@@ -57,6 +58,7 @@ await rm(outputDir, { recursive: true, force: true });
 await mkdir(outputDir, { recursive: true });
 await cp(path.join(clientDir, "_next"), path.join(outputDir, "_next"), { recursive: true });
 if (basePath) await rewriteClientBasePath(path.join(outputDir, "_next"));
+await cp(path.join(clientDir, "og-preview.jpg"), path.join(outputDir, "og-preview.jpg"));
 await cp(path.join(clientDir, "og.png"), path.join(outputDir, "og.png"));
 await writeFile(path.join(outputDir, "index.html"), html, "utf8");
 await writeFile(path.join(outputDir, "404.html"), html, "utf8");
