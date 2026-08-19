@@ -1,4 +1,4 @@
-import { cp, mkdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -14,6 +14,22 @@ const basePath = rawBasePath && rawBasePath !== "/"
 const siteOrigin = (process.env.SITE_ORIGIN ?? "https://example.com").replace(/\/+$/, "");
 const publicAsset = (assetPath) => `${basePath}${assetPath}`;
 const publicPathname = basePath ? `${basePath}/` : "/";
+
+async function rewriteClientBasePath(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  await Promise.all(entries.map(async (entry) => {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      await rewriteClientBasePath(entryPath);
+      return;
+    }
+    if (!entry.name.endsWith(".js")) return;
+
+    const source = await readFile(entryPath, "utf8");
+    const rewritten = source.replaceAll("return`/`+e", `return\`${basePath}/\`+e`);
+    if (rewritten !== source) await writeFile(entryPath, rewritten, "utf8");
+  }));
+}
 
 const serverUrl = pathToFileURL(serverEntry);
 serverUrl.searchParams.set("static-export", `${Date.now()}`);
@@ -40,6 +56,7 @@ html = html
 await rm(outputDir, { recursive: true, force: true });
 await mkdir(outputDir, { recursive: true });
 await cp(path.join(clientDir, "_next"), path.join(outputDir, "_next"), { recursive: true });
+if (basePath) await rewriteClientBasePath(path.join(outputDir, "_next"));
 await cp(path.join(clientDir, "og.png"), path.join(outputDir, "og.png"));
 await writeFile(path.join(outputDir, "index.html"), html, "utf8");
 await writeFile(path.join(outputDir, "404.html"), html, "utf8");
