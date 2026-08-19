@@ -2,7 +2,7 @@
 
 給初入職場人士使用的繁體中文（香港用語）性格探索 Web App。測驗以 40 題通用職場情境為核心，只有當四維傾向接近、首兩個類型互相拉扯，或認知功能排序未完全一致時，才追加 8、12 或最多 16 題針對性追問。
 
-線上版本：[workstyle-compass-hk.jeremyfai1126.chatgpt.site](https://workstyle-compass-hk.jeremyfai1126.chatgpt.site)
+線上版本：[jeremyfai11.github.io/workstyle-compass-hk](https://jeremyfai11.github.io/workstyle-compass-hk/)
 
 ## 功能
 
