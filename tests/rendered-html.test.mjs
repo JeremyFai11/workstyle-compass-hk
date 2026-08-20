@@ -50,8 +50,8 @@ test("keeps the assessment complete and the starter removed", async () => {
   assert.equal((data.match(/^[ ]{2}[A-Z]{4}: \{/gm) ?? []).length, 16);
   assert.match(page, /navigator\.share/);
   assert.match(page, /navigator\.clipboard/);
-  assert.match(page, /類型理論序列（\$\{result\.best\.code\}）：\$\{theoreticalStack\}/);
-  assert.doesNotMatch(page, /認知功能傾向：\$\{functions\}/);
+  assert.match(page, /題目呈現的認知功能傾向：\$\{observedFunctions\}/);
+  assert.doesNotMatch(page, /類型理論序列（\$\{result\.best\.code\}）：/);
   assert.match(page, /第二可能類型/);
   assert.match(page, /buildFollowUpPlan/);
   assert.match(page, /本次辨型清晰度/);
